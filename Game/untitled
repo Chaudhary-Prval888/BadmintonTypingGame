@@ -1,0 +1,147 @@
+// Praval Chaudhary
+// 4/11/22 - 4/15/22
+// BadmintonTyper1.java
+// This program is a start of the Game using Java. This sub-program creates the
+// start panel and directions of the big game.
+
+import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.CardLayout;
+import javax.swing.JFrame;    
+import javax.swing.JPanel;
+import java.awt.Image;
+import javax.swing.JButton;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import javax.swing.JLabel;
+import javax.swing.JSlider;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.Component;
+import javax.swing.SwingConstants;
+import java.io.File;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+
+public class BadmintonTyper1
+{    
+    public BadmintonTyper1(){}
+    
+    public static void main(String [] args)
+    {
+        BadmintonTyper1 bt1 = new BadmintonTyper1();
+        bt1.run();
+    }
+    
+    public void run()
+    {
+        JFrame frame = new JFrame("PutItTogether");
+        frame.setSize(800, 600);
+        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.setLocation(00, 50);
+        frame.setResizable(true);
+        BadmintonTyperHolder bth = new BadmintonTyperHolder();
+        frame.getContentPane().add(bth);
+        frame.setVisible(true);
+    }
+}
+
+class BadmintonTyperHolder extends JPanel
+{
+    public BadmintonTyperHolder()
+    {
+        CardLayout cards = new CardLayout();
+        setLayout(cards);
+        
+        BaddyStartPanel btsp = new BaddyStartPanel(this, cards);
+        BaddyDirectionPanel btdp = new BaddyDirectionPanel(this, cards);
+        
+        add(btsp, "StartPage");
+        add(btdp, "Directions");
+    }
+}
+
+class BaddyStartPanel extends JPanel
+{
+    private BadmintonTyperHolder panelCards;
+    private CardLayout cards;
+    private JLabel welcome;
+    private JButton start;
+    private JMenu PanelChooser;
+    
+    public BaddyStartPanel(BadmintonTyperHolder panelCardsIn, CardLayout cardsIn)
+    {
+        panelCards = panelCardsIn;
+        cards = cardsIn;
+        
+        welcome = new JLabel("Badminton Typer");
+        welcome.setFont(new Font("Serif", Font.BOLD, 40));
+    
+        start = new JButton("Play");
+        btPlayButtonHandler btpbh = new btPlayButtonHandler();
+        start.addActionListener(btpbh);
+        
+        JMenuBar bar = new JMenuBar();
+        JMenu Menu = new JMenu("Other Panels");
+        JMenuItem Direction = new JMenuItem("Direction Panel");
+        JMenuItem Personlization = new JMenuItem("Personlization Panel");
+        btMenuHandler btmh = new btMenuHandler();        
+        Direction.addActionListener(btmh);
+        Personlization.addActionListener(btmh);
+        Menu.add(Direction );
+        Menu.add(Personlization );
+        bar.add(Menu);
+        
+        add(welcome, this);
+        add(start, this);
+        add(bar, this);
+        
+    }
+    class btPlayButtonHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent evt)
+        {
+            String command = evt.getActionCommand();
+            if(command.equals("Play"))
+                cards.show(panelCards, "Directions");
+        }
+    }
+    class btMenuHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent evt)
+        {
+            
+        }
+    }
+}
+
+class BaddyDirectionPanel extends JPanel
+{
+    private BadmintonTyperHolder panelCards;
+    private CardLayout cards;
+    private JTextArea directions;
+    private JButton next;
+    private JButton back;
+    
+    public BaddyDirectionPanel(BadmintonTyperHolder panelCardsIn, CardLayout cardsIn)
+    {
+        panelCards = panelCardsIn;
+        cards = cardsIn;
+        
+    }
+}
